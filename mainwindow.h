@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QString>
+#include <QTime>
 namespace Ui {
 class MainWindow;
 }
@@ -36,6 +39,8 @@ private slots:
 
     void on_CalculateButton_clicked();
 
+    void on_radioButton_2_our_clicked();
+
 private:
     Ui::MainWindow *ui;
     struct Task
@@ -53,7 +58,12 @@ private:
     QVector <int>getOptimalTask();
     void delTree(Tree *root);
     QList <int>getApproximateTask();
-    QVector <int>approximateTaskList(int level,QVector <int> tmp,int i);
+    bool isContained2(QList <int> taskList, int number);
+    QVector <int>approximateTaskList(QList <int> taskList,int number);
+    void showTree(QTreeWidgetItem *rootItem,Tree *root);
+    QString getTaskList(QVector <int> list);
+    int getMaxShtraf2(QList <int> task);
+    QString getTaskList2(QList <int> task);
     //bool isContained2(QList task,int number);
 };
 

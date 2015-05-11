@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     root=0;
+    QTime midnight(0,0,0);
+    qsrand(midnight.secsTo(QTime::currentTime()));
     //Task New;
     //setTasks(tasks);
     //for (int i=0;i<2;i++) tasks.append(New);
@@ -111,7 +113,9 @@ QVector <int> MainWindow::getOptimalTask()
             }
         }
     }
+    //delTree(root);
     return task;
+
 }
 void MainWindow::delTree(Tree *root)
 {
@@ -121,49 +125,146 @@ void MainWindow::delTree(Tree *root)
     }
     delete root;
 }
-/*bool MainWindow::isContained2(QList task,int number)
+bool MainWindow::isContained2(QList <int>task,int number)
 {
     for (int i=0;i<task.size();i++)
     {
         if (task[i]==number) return true;
     }
     return false;
-}*/
+}
 
-QVector <int> MainWindow::approximateTaskList(int level,QVector <int> tmp,int i)
+QVector <int> MainWindow::approximateTaskList(QList <int> taskList,int number)
 {
-    QVector <int>arg;
-    for(int k=0;k<tasks.size()-level+1;k++)
+    QVector <int> tasker;
+    tasker.append(number);
+    for (int i=taskList.size()-1;i>=0;i--)
     {
-        for (int j=0;j<tasks.size();j++)
-        {
-            if (!isContained(j,tmp))
-            {
-
-            }
-        }
+        if (!isContained(taskList[i],tasker) && tasker.size()<=taskList.size()) tasker.prepend(taskList[i]);
     }
+    return tasker;
 }
 
 QList <int> MainWindow::getApproximateTask()
 {
-    QList <int> current;
-    //QVector <QList<int>> taskLists;
+    QList <int> taskList;
+    QList <int> result;
     for (int i=0;i<tasks.size();i++)
     {
-        for (int j=0;j<current.size();j++)
-        {
-
-        }
-
+        taskList.append(i);
     }
+    while (taskList.size()!=0)
+    {
+        QVector <int> tasks=approximateTaskList(taskList,taskList[0]);
+        int min=getMaxShtraf(approximateTaskList(taskList,taskList[0]));
+        ui->textBrowser_2ndAlgWork->append("F("+getTaskList(tasks)+")="+QString::number(min));
+        int min_number=0;
+        for (int i=1;i<taskList.size();i++)
+        {
+            tasks=approximateTaskList(taskList,taskList[i]);
+            int shtraf=getMaxShtraf(tasks);
+            ui->textBrowser_2ndAlgWork->append("F("+getTaskList(tasks)+")="+QString::number(shtraf));
+            if (shtraf<min)
+            {
+                min=shtraf;
+                min_number=i;
+            }
+        }
+        result.prepend(taskList[min_number]);
+        taskList.removeAt(min_number);
+    }
+    return result;
+}
+QString MainWindow::getTaskList(QVector<int> list)
+{
+    QString tmp="";
+    for (int i=0;i<list.size()-1;i++)
+    {
+        tmp+=QString::number(list[i]+1)+",";
+    }
+    tmp+=QString::number(list[list.size()-1]+1);
+    return tmp;
 }
 
+QString MainWindow::getTaskList2(QList<int> list)
+{
+    QString tmp="";
+    for (int i=0;i<list.size()-1;i++)
+    {
+        tmp+=QString::number(list[i]+1)+",";
+    }
+    tmp+=QString::number(list[list.size()-1]+1);
+    return tmp;
+}
+
+void MainWindow::showTree(QTreeWidgetItem *rootItem,Tree *root)
+{
+    QTreeWidgetItem *newRootItem;
+    if (root->level==0)
+    {
+        newRootItem=new QTreeWidgetItem(ui->tree);
+        newRootItem->setText(0,"It's a root");
+
+    }
+    else
+    {
+        newRootItem=new QTreeWidgetItem(rootItem);
+        newRootItem->setText(1,QString::number(root->max));
+        newRootItem->setText(0,getTaskList(root->task));
+    }
+    for (int i=0;i<root->branchs.size();i++)
+    {
+        showTree(newRootItem,root->branchs[i]);
+    }
+    ui->tree->expandAll();
+}
+int MainWindow::getMaxShtraf2(QList <int> task)
+{
+
+    int time = tasks[task[0]].begin+tasks[task[0]].duration;
+    int shtraf = time-tasks[task[0]].deadline;
+    for (int i=1;i<task.size();i++)
+    {
+        if (tasks[task[i]].begin>=time)
+        {
+            time=tasks[task[i]].begin+tasks[task[i]].duration;
+        }
+        else
+        {
+            time+=tasks[task[i]].duration;
+        }
+        if (time-tasks[task[i]].deadline>shtraf) shtraf=time-tasks[task[i]].deadline;
+    }
+    return shtraf;
+}
 void MainWindow::on_CalculateButton_clicked()
 {
+    ui->tree->clear();
     ui->textBrowser->clear();
+    ui->textBrowser_2ndAlg->clear();
+    ui->textBrowser_2ndAlgWork->clear();
     if (root) delTree(root);
     if (tasks.size()!=0) tasks.clear();
+    int taskCount=ui->taskCount->text().toInt();
+    ui->tasks->setColumnCount(taskCount);
+    int k=ui->lineEditDiapazon->text().toInt();
+    int n;
+    if (ui->radioButton_gen->isChecked())
+    {
+        for (int i=0;i<taskCount;i++)
+        {
+            n=qrand()%(k+1);
+            QTableWidgetItem *item=new QTableWidgetItem(QString::number(n));
+            ui->tasks->setItem(0,i,item);
+            n=qrand()%(k+1);
+            item=new QTableWidgetItem(QString::number(n));
+            ui->tasks->setItem(1,i,item);
+            n=qrand()%(k+1);
+            item=new QTableWidgetItem(QString::number(n));
+            ui->tasks->setItem(2,i,item);
+        }
+    }
+
     for (int i=0;i<ui->tasks->columnCount();i++)
     {
         Task New;
@@ -172,10 +273,27 @@ void MainWindow::on_CalculateButton_clicked()
         tasks[i].duration=ui->tasks->item(1,i)->text().toInt();
         tasks[i].deadline=ui->tasks->item(2,i)->text().toInt();
     }
-
+    QTime time;
+    time.start();
     QVector <int> shedule=getOptimalTask();
-    for (int i=0;i<shedule.size();i++)
-    {
-        ui->textBrowser->append(QString::number(shedule[i]+1));
-    }
+    int time11=time.elapsed();
+    Tree *r=root;
+    showTree(0,r);
+    ui->tree->expandAll();
+    ui->textBrowser->append(getTaskList(shedule));
+    QTime time2;
+    time2.start();
+    QList<int> taskList2=getApproximateTask();
+    int time22=time2.elapsed();
+    ui->textBrowser_2ndAlg->append(getTaskList2(taskList2));
+    ui->label_time->setText("Время МВГ="+QString::number(time11)+"\nВремя прибл. алг.="
+                           +QString::number(time22)+"\nШтраф первого алгоритма="+QString::number(getMaxShtraf(shedule))
+                           +"\nШтраф второго алгоритма="+QString::number(getMaxShtraf2(taskList2)));
+    //ui->textBrowser_2ndAlg->append(QString::number(getMaxShtraf2((taskList2))));
+}
+
+void MainWindow::on_radioButton_2_our_clicked()
+{
+    int taskCount=ui->taskCount->text().toInt();
+    ui->tasks->setColumnCount(taskCount);
 }
