@@ -17,22 +17,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    struct Tree
+    struct Tree//структура одного узла дерева
     {
-        int max;
-        int level;
-        bool isRoot;
-        QVector <int>task;
-        QVector <Tree*> branchs;
-    };
-    struct Tree2
-    {
-        int max;
-        int level;
-        bool isRoot;
-        QVector <int>task;
-        QList <int> mask;
-        QVector <Tree*> branchs;
+        int max;//максимальный штраф
+        int level;//уровень узла
+        QVector <int>task;//контейнер расписания
+        QVector <Tree*> branchs;//контейнер для хранения ветвей
     };
 private slots:
     void on_tableWidget_cellChanged(int row, int column);
@@ -45,22 +35,22 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    struct Task
+    struct Task//структура задания
     {
         int begin;
         int duration;
         int deadline;
     };
-    QVector <Task> tasks;
+    QVector <Task> tasks;//контейнер для хранения заданий
 
-    Tree *root;
+    Tree *root;//корень дерева вычислений для МВГ
     Tree* getMin(Tree *root);
     int getMaxShtraf(QVector <int> task);
     bool isContained(int number,QVector <int>task);
     QVector <int>getOptimalTask();
     void delTree(Tree *root);
     QList <int>getApproximateTask();
-    bool isContained2(QList <int> taskList, int number);
+
     QVector <int>approximateTaskList(QList <int> taskList,int number);
     void showTree(QTreeWidgetItem *rootItem,Tree *root);
     QString getTaskList(QVector <int> list);
