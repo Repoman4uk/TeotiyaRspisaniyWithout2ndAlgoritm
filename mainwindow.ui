@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1240</width>
-    <height>477</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTableWidget" name="tasks">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>10</x>
       <y>30</y>
       <width>621</width>
-      <height>141</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="rowCount">
@@ -39,7 +39,7 @@
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>10</y>
+      <y>160</y>
       <width>256</width>
       <height>71</height>
      </rect>
@@ -48,9 +48,9 @@
    <widget class="QPushButton" name="CalculateButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>190</y>
-      <width>161</width>
+      <x>870</x>
+      <y>30</y>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -62,8 +62,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>190</y>
-      <width>481</width>
+      <y>240</y>
+      <width>391</width>
       <height>281</height>
      </rect>
     </property>
@@ -90,9 +90,9 @@
    <widget class="QLineEdit" name="taskCount">
     <property name="geometry">
      <rect>
-      <x>690</x>
+      <x>650</x>
       <y>50</y>
-      <width>161</width>
+      <width>41</width>
       <height>31</height>
      </rect>
     </property>
@@ -113,7 +113,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>670</x>
       <y>30</y>
       <width>131</width>
       <height>16</height>
@@ -123,23 +123,10 @@
      <string>Количество заданий</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>170</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Результат</string>
-    </property>
-   </widget>
    <widget class="QRadioButton" name="radioButton_gen">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>650</x>
       <y>150</y>
       <width>151</width>
       <height>20</height>
@@ -152,7 +139,7 @@
    <widget class="QRadioButton" name="radioButton_2_our">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>650</x>
       <y>190</y>
       <width>121</width>
       <height>20</height>
@@ -165,9 +152,9 @@
    <widget class="QLabel" name="label_time">
     <property name="geometry">
      <rect>
-      <x>880</x>
-      <y>200</y>
-      <width>231</width>
+      <x>870</x>
+      <y>400</y>
+      <width>251</width>
       <height>71</height>
      </rect>
     </property>
@@ -181,9 +168,9 @@
    <widget class="QLineEdit" name="lineEditDiapazon">
     <property name="geometry">
      <rect>
-      <x>740</x>
+      <x>700</x>
       <y>100</y>
-      <width>113</width>
+      <width>31</width>
       <height>22</height>
      </rect>
     </property>
@@ -191,7 +178,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>670</x>
       <y>80</y>
       <width>121</width>
       <height>16</height>
@@ -204,7 +191,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>690</x>
+      <x>650</x>
       <y>100</y>
       <width>53</width>
       <height>16</height>
@@ -218,7 +205,7 @@
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>90</y>
+      <y>270</y>
       <width>256</width>
       <height>71</height>
      </rect>
@@ -227,24 +214,76 @@
    <widget class="QTextBrowser" name="textBrowser_2ndAlgWork">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>420</x>
       <y>240</y>
-      <width>321</width>
-      <height>231</height>
+      <width>381</width>
+      <height>281</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_tree">
     <property name="geometry">
      <rect>
-      <x>930</x>
-      <y>360</y>
-      <width>151</width>
+      <x>870</x>
+      <y>80</y>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Вывод дерева</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>220</y>
+      <width>53</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>МВГ</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>220</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Приближенный алгоритм</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>140</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Расписание МВГ</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>250</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Расписание приближенного алгоритма</string>
     </property>
    </widget>
   </widget>

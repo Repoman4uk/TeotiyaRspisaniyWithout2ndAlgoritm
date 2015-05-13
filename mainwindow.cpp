@@ -9,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
     root=0;
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
+    QStringList taskHeaders;
+    taskHeaders<<"r"<<"q"<<"d";
+    ui->tasks->setVerticalHeaderLabels(taskHeaders);
+    QStringList treeHeaders;
+    treeHeaders<<"Ветви"<<"Штраф";
+    ui->tree->setHeaderLabels(treeHeaders);
     //Task New;
     //setTasks(tasks);
     //for (int i=0;i<2;i++) tasks.append(New);
