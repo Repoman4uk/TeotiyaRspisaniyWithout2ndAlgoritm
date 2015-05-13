@@ -277,8 +277,7 @@ void MainWindow::on_CalculateButton_clicked()
     time.start();
     QVector <int> shedule=getOptimalTask();
     int time11=time.elapsed();
-    Tree *r=root;
-    showTree(0,r);
+
     ui->tree->expandAll();
     ui->textBrowser->append(getTaskList(shedule));
     QTime time2;
@@ -296,4 +295,10 @@ void MainWindow::on_radioButton_2_our_clicked()
 {
     int taskCount=ui->taskCount->text().toInt();
     ui->tasks->setColumnCount(taskCount);
+}
+
+void MainWindow::on_pushButton_tree_clicked()
+{
+    Tree *r=root;
+    showTree(0,r);
 }

@@ -41,6 +41,8 @@ private slots:
 
     void on_radioButton_2_our_clicked();
 
+    void on_pushButton_tree_clicked();
+
 private:
     Ui::MainWindow *ui;
     struct Task
